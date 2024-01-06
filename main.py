@@ -8,7 +8,7 @@ class Window (Tk):
         self.resizable(False, False)
         self.canvas = Canvas(self, width=width, height=width)
         self.canvas.pack(fill=BOTH, expand=True)
-        self.canvas.create_rectangle(0, 0, width, height, fill="red")
+        self.canvas.create_rectangle(0, 0, width, height, fill="white")
 
         self.canvas.bind("<Button-1>", self.on_click)
         self.running = False
@@ -17,23 +17,46 @@ class Window (Tk):
         print("Clicked at", event.x, event.y)
 
     def redraw(self):
-        #The redraw() method on the window class should simply call the root widget's update_idletasks() and update() methods. Each time this is called, the window will redraw itself.
         self.update_idletasks()
         self.update()
 
     def wait_for_close(self):
-        #This method should set the data member we created to track the "running" state of the window to True. Next, it should call self.redraw() over and over as long as the running state remains True.
         self.running = True 
         while self.running:
             self.redraw()
 
-    def close(self):
-        # the close() method should simply set the running state to False. You'll also need to add another line to the constructor to call the protocol method on the root widget, to connect your close method to the "delete window" action. This will stop your program from running when you close the graphical window.
+    def close(self):       
         self.running = False
         self.protocol("WM_DELETE_WINDOW", self.close)
 
+    def draw_line(self, start, end, color="#0f0"):
+        line = Line(start, end, color)
+        line.draw(self.canvas)
+    
+
+class Point:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+class Line:
+    def __init__(self, start, end, color="#111111"):
+        self.start = start
+        self.end = end
+        self.color = color
+
+    def draw(self, canvas):
+        print("Drawing line from", self.start.x, self.start.y, "to", self.end.x, self.end.y)
+        canvas.create_line(self.start.x, self.start.y, self.end.x, self.end.y, fill=self.color, width=2)
+
 def main():
     win = Window(800, 600)
+    win.draw_line(Point(0, 0), Point(800, 600), "#00f000")
+    win.draw_line(Point(0, 600), Point(800, 0), "#00f")
+    win.draw_line(Point(0, 0), Point(800, 0))
+    win.draw_line(Point(0, 0), Point(0, 600))
+    win.draw_line(Point(800, 0), Point(800, 600))
+    win.draw_line(Point(0, 600), Point(800, 600))
     win.wait_for_close()
 
 
