@@ -49,7 +49,6 @@ class Line:
         self.color = color
 
     def draw(self, canvas):
-        print("Drawing line from", self.start.x, self.start.y, "to", self.end.x, self.end.y)
         canvas.create_line(self.start.x, self.start.y, self.end.x, self.end.y, fill=self.color, width=2)
 
 

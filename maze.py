@@ -123,7 +123,7 @@ class Maze:
 
     def _solve(self):
         #solve the maze
-        solved = self._solve_r(0, 0)
+        return self._solve_r(0, 0)
 
     def _solve_r(self, i, j):
         #recursively solve the maze
