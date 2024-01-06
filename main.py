@@ -72,12 +72,23 @@ class Cell:
             canvas.create_line(self.x1, self.y1, self.x2, self.y1, fill="#f00", width=2)
         if self.has_bottom_wall:
             canvas.create_line(self.x1, self.y2, self.x2, self.y2, fill="#f00", width=2)
+    
+    def draw_move(self, to_cell, canvas, undo=False):
+        #draw a line from the center of one cell to another
+        #If the undo flag is not set, the line you draw should be "red". Otherwise, make it "gray"
+        line = Line(Point(self.x1 + (self.x2 - self.x1) / 2, self.y1 + (self.y2 - self.y1) / 2), Point(to_cell.x1 + (to_cell.x2 - to_cell.x1) / 2, to_cell.y1 + (to_cell.y2 - to_cell.y1) / 2), "#f00" if not undo else "#888")
+        line.draw(canvas)
 
 def main():
     win = Window(800, 600)
     win.draw_line(Point(0, 0), Point(800, 600), "#00f000")
     win.draw_line(Point(0, 600), Point(800, 0), "#00f")
-    win.draw_cell(Cell(0, 0, 100, 100))
+
+    cell1 = Cell(0, 0, 100, 100)
+    cell2 = Cell(100, 0, 200, 100)
+    cell1.draw(win.canvas)
+    cell2.draw(win.canvas)
+    cell1.draw_move(cell2, win.canvas, undo=True) 
     win.wait_for_close()
 
 
