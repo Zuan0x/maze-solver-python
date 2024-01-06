@@ -39,6 +39,8 @@ class Maze:
             for j in range(self.num_rows):
                 self._draw_cell(self.cells[i][j], i, j)
 
+        self._break_entrance_and_exit()
+
 
     def _draw_cell(self, cell, i, j):
         #calculate the x/y position of the Cell based on i, j, the cell_size, and the x/y position of the Maze itself. The x/y position of the maze represents how many pixels from the top and left the maze should start from the side of the window.
@@ -46,9 +48,16 @@ class Maze:
             return
         self.cells[i][j].draw(self._win.canvas)
         self._animate()
+    
+    def _break_entrance_and_exit(self):
+        self.cells[0][0].break_wall('top')
+        self._draw_cell(self.cells[0][0], 0, 0)
+
+        self.cells[self.num_cols - 1][self.num_rows - 1].break_wall('bottom')
+        self._draw_cell(self.cells[self.num_cols - 1][self.num_rows - 1], self.num_cols - 1, self.num_rows - 1)
 
     def _animate(self):
-        time.sleep(0.1)
+        time.sleep(0.05)
         if self._win is None:
             return
         self._win.redraw()
