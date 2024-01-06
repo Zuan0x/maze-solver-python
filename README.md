@@ -2,7 +2,7 @@
 
 A simple Python application for generating mazes and solving them using Tkinter.
 
-![][maze-solver-recording.gif]
+![maze-solver-gif](maze-solver-recording.gif)
 
 ## Features
 
