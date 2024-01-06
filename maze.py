@@ -42,7 +42,7 @@ class Maze:
 
         self._break_entrance_and_exit()
         self._break_walls_r(0, 0)
-
+        self._reset_cells_visited()
 
     def _draw_cell(self, cell, i, j):
         #calculate the x/y position of the Cell based on i, j, the cell_size, and the x/y position of the Maze itself. The x/y position of the maze represents how many pixels from the top and left the maze should start from the side of the window.
@@ -108,6 +108,12 @@ class Maze:
 
             # recursively visit the next cell
             self._break_walls_r(next_index[0], next_index[1])
+    
+    def _reset_cells_visited(self):
+        for i in range(self.num_cols):
+            for j in range(self.num_rows):
+                self.cells[i][j].visited = False
+
     def _animate(self):
         time.sleep(0.01)
         if self._win is None:
